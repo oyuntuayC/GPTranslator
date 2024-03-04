@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GPTranslator</title>
+    <!-- <link rel="icon" type="image/x-icon" href="favicon/favicon-32x32.png"> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,500&display=swap" />
+</head>
+
+<body>
+    <div class="container">
+        <div id="title-bar">
+            <button title="options" id="options" onclick="electronAPI.menu()">
+                <svg class="control" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15">
+                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+                </svg>
+            </button>
+            <img title="logo" id="title-bar-icon">
+            <div id="title">GPTranslator</div>
+        </div>
+        <div class="languages">
+            <select title="source language" id="source-language">
+                <option value="Auto">Auto Detect</option>
+                <option value="English">English</option>
+                <option value="Catalan">Catalan</option>
+                <option value="Spanish">Spanish</option>
+                <option value="Chinese">Chinese</option>
+                <option value="French">French</option>
+                <option value="German">German</option>
+                <option value="Italian">Italian</option>
+                <option value="Portuguese">Portuguese</option>
+                <option value="Japanese">Japanese</option>
+                <option value="Korean">Korean</option>
+                <option value="Arabic">Arabic</option>
+                <option value="Russian">Russian</option>
+            </select>
+            <button id="swap" title="swap languages" onclick="swapLanguages()">
+                <svg class="control" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"></path>
+                </svg>
+            </button>
+            <select title="target lagnauge" id="target-language">
+                <option value="English">English</option>
+                <option value="Catalan">Catalan</option>
+                <option value="Spanish">Spanish</option>
+                <option value="Chinese" selected>Chinese</option>
+                <option value="French">French</option>
+                <option value="German">German</option>
+                <option value="Italian">Italian</option>
+                <option value="Portuguese">Portuguese</option>
+                <option value="Japanese">Japanese</option>
+                <option value="Korean">Korean</option>
+                <option value="Arabic">Arabic</option>
+                <option value="Russian">Russian</option>
+            </select>
+            <input type="text" id="prompt" placeholder="Prompt" />
+            <button title="refresh result" onclick="translateText()" style="margin-right: 0px;">
+                <svg class="control" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                    <path style="transform: scale(0.9); transform-origin: center"
+                        d="M13.5 2c-5.629 0-10.212 4.436-10.475 10h-3.025l4.537 5.917 4.463-5.917h-2.975c.26-3.902 3.508-7 7.475-7 4.136 0 7.5 3.364 7.5 7.5s-3.364 7.5-7.5 7.5c-2.381 0-4.502-1.119-5.876-2.854l-1.847 2.449c1.919 2.088 4.664 3.405 7.723 3.405 5.798 0 10.5-4.702 10.5-10.5s-4.702-10.5-10.5-10.5z">
+                    </path>
+                </svg>
+            </button>
+        </div>
+        <div class="contents">
+            <div id="translation-input">
+                <button title="clear input" id="clear" onclick="clearInput()">
+                    <svg class="text" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                        <path style="transform: scale(0.6); transform-origin: center"
+                            d="M 2.0625 0.1875 C 1.410156 0.761719 0.765625 1.40625 0.1875 2.0625 C 3.503906 5.363281 6.992188 8.664062 10.125 12.09375 C 6.785156 15.355469 3.453125 18.6875 0.1875 22.03125 C 0.855469 22.558594 1.390625 23.28125 2.0625 23.8125 C 5.363281 20.496094 8.664062 17.007812 12.09375 13.875 C 15.363281 17.160156 18.632812 20.617188 22.03125 23.71875 C 22.507812 23.042969 23.34375 22.566406 23.71875 21.84375 C 20.433594 18.574219 16.976562 15.304688 13.875 11.90625 C 17.214844 8.644531 20.546875 5.3125 23.8125 1.96875 C 23.144531 1.441406 22.609375 0.71875 21.9375 0.1875 C 18.636719 3.503906 15.335938 6.992188 11.90625 10.125 C 8.691406 6.769531 5.28125 3.546875 2.0625 0.1875 Z M 2.0625 0.1875 " />
+                    </svg>
+                </button>
+                <textarea id="text-to-translate" placeholder="Press Ctrl+T to paste from clipboard..."></textarea>
+            </div>
+            <div id="translation-result">
+                <div id="translated-text"></div>
+                <div id="loading-background">
+                    <div class="loading"></div>
+                </div>
+                <button title="copy result" id="copy" onclick="copyOutput()">
+                    <svg class="text" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                        <path style="transform: scale(0.65); transform-origin: center"
+                            d="M18 6v-6h-18v18h6v6h18v-18h-6zm-12 10h-4v-14h14v4h-10v10zm16 6h-14v-14h14v14z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
