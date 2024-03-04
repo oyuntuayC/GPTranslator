@@ -376,7 +376,7 @@
     minimatch "^9.0.3"
     plist "^3.1.0"
 
-"@electron/windows-sign@^1.0.0":
+"@electron/windows-sign@^1.0.0", "@electron/windows-sign@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@electron/windows-sign/-/windows-sign-1.1.2.tgz#5489861ca62348d2300407e85d949af95849955e"
   integrity sha512-eXEiZjDtxW3QORCWfRUarANPRTlH9B6At4jqBZJ0NzokSGutXQUVLPA6WmGpIhDW6w2yCMdHW1EJd1HrXtU5sg==
@@ -1609,9 +1609,9 @@ camel-case@^4.1.2:
     tslib "^2.0.3"
 
 caniuse-lite@^1.0.30001587:
-  version "1.0.30001591"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001591.tgz#16745e50263edc9f395895a7cd468b9f3767cf33"
-  integrity sha512-PCzRMei/vXjJyL5mJtzNiUCKP59dm8Apqc3PH8gJkMnMXZGox93RbE76jHsmLwmIo6/3nsYIpJtx0O7u5PqFuQ==
+  version "1.0.30001593"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001593.tgz#7cda1d9e5b0cad6ebab4133b1f239d4ea44fe659"
+  integrity sha512-UWM1zlo3cZfkpBysd7AS+z+v007q9G1+fLTUU42rQnY6t2axoogPW/xol6T7juU5EUoOhML4WgBIdG+9yYqAjQ==
 
 chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.1:
   version "4.1.2"
@@ -2172,20 +2172,22 @@ electron-store@^8.1.0:
     type-fest "^2.17.0"
 
 electron-to-chromium@^1.4.668:
-  version "1.4.690"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.690.tgz#dd5145d45c49c08a9a6f7454127e660bdf9a3fa7"
-  integrity sha512-+2OAGjUx68xElQhydpcbqH50hE8Vs2K6TkAeLhICYfndb67CVH0UsZaijmRUE3rHlIxU1u0jxwhgVe6fK3YANA==
+  version "1.4.692"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.692.tgz#82139d20585a4b2318a02066af7593a3e6bec993"
+  integrity sha512-d5rZRka9n2Y3MkWRN74IoAsxR0HK3yaAt7T50e3iT9VZmCCQDT3geXUO5ZRMhDToa1pkCeQXuNo+0g+NfDOVPA==
 
 electron-winstaller@^5.0.0:
-  version "5.2.2"
-  resolved "https://registry.yarnpkg.com/electron-winstaller/-/electron-winstaller-5.2.2.tgz#529a3528a0dcb36268c0c5048d0f05ed0cedfb4f"
-  integrity sha512-nw+SbS0DA6SF8bEkcL4SqtPOoLKc5JkEXAz7kzdzz22rY12PZRtTn9zpztbwy+xrLqSBBFR1u0bdvNLpvlmrkw==
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/electron-winstaller/-/electron-winstaller-5.3.0.tgz#852aa6d6daf48e22ec30cfd5c287fd8253f110bc"
+  integrity sha512-ml77/OmeeLFFc+dk3YCwPQrl8rthwYcAea6mMZPFq7cGXlpWyRmmT0LY73XdCukPnevguXJFs+4Xu+aGHJwFDA==
   dependencies:
     "@electron/asar" "^3.2.1"
     debug "^4.1.1"
     fs-extra "^7.0.1"
     lodash.template "^4.2.2"
     temp "^0.9.0"
+  optionalDependencies:
+    "@electron/windows-sign" "^1.1.2"
 
 electron@29.1.0:
   version "29.1.0"
@@ -2932,9 +2934,9 @@ hpack.js@^2.1.6:
     wbuf "^1.1.0"
 
 html-entities@^2.3.2:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-2.4.0.tgz#edd0cee70402584c8c76cc2c0556db09d1f45061"
-  integrity sha512-igBTJcNNNhvZFRtm8uA6xMY6xYleeDwn3PeBCkDz7tHttv4F2hsDI2aPgNERWzvRcNYHNT3ymRaQzllmXj4YsQ==
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-2.5.2.tgz#201a3cf95d3a15be7099521620d19dfb4f65359f"
+  integrity sha512-K//PSRMQk4FZ78Kyau+mZurHn3FH0Vwr+H36eE0rPbeYkRRi9YxceYPhuN60UwWorxyKHhqoAJl2OFKa4BVtaA==
 
 html-minifier-terser@^6.0.2:
   version "6.1.0"

@@ -12,7 +12,7 @@ module.exports = {
     {
       name: '@electron-forge/maker-squirrel',
       config: {
-        iconUrl: 'https://raw.githubusercontent.com/oyuntuayC/GPTranslator/main/favicon.ico',
+        iconUrl: 'https://raw.githubusercontent.com/oyuntuayC/GPTranslator/main/src/favicon/favicon.ico',
         setupIcon: path.join('src','favicon','favicon.ico'),
         loadingGif: path.join('src','favicon','splash.gif'),
       },

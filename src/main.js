@@ -131,7 +131,7 @@ const createMainWindow = () => {
   mainWin.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
   // Open the DevTools.
-  mainWin.webContents.openDevTools();
+  // mainWin.webContents.openDevTools();
 
   return mainWin;
 };
@@ -179,16 +179,6 @@ async function translateSelected(timeout=500){
   mainWin.webContents.send('shortcut', result);
 }
 
-app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createMainWindow()
-  }
-})
-
-mainWin.on('closed', () => {
-  app.quit();
-})
-
 app.whenReady().then(() => {
   ipcMain.handle('read-clipboard', () => {
     var clipboardContent = clipboard.readText()
@@ -211,6 +201,16 @@ app.whenReady().then(() => {
   }else{
     globalShortcut.register('Alt+Space', translateSelected);
   }
+
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createMainWindow()
+    }
+  })
+  
+  mainWin.on('closed', () => {
+    app.quit();
+  })
 })
 
 app.on('window-all-closed', () => {
