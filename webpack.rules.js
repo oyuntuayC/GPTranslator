@@ -20,6 +20,14 @@ module.exports = [
     test: /\.(png|svg|jpg|jpeg|gif)$/i,
     type: 'asset/resource',
   },
+  {
+    test: /\.ts?$/,
+    exclude: /(node_modules|.webpack)/,
+    loader: 'ts-loader',
+    options: {
+      transpileOnly: true
+    }
+  }
   // Put your webpack loader rules in this array.  This is where you would put
   // your ts-loader configuration for instance:
   /**

@@ -1,22 +1,29 @@
+import { app, MenuItemConstructorOptions, BrowserWindow, clipboard, ipcMain, globalShortcut, Menu, PopupOptions } from 'electron';
+import Store from 'electron-store';
+import path from 'node:path';
+import { keyboard, Key } from "@nut-tree/nut-js";
 import Icon from './favicon/favicon.png';
 
-const { app, BrowserWindow, clipboard, ipcMain, globalShortcut, Menu } = require('electron')
-const Store = require('electron-store');
-const path = require('node:path');
-const {keyboard, Key} = require("@nut-tree/nut-js");
 
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) {
-  app.quit();
-};
+declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
+declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+declare const KEY_WINDOW_WEBPACK_ENTRY: string;
+declare const KEY_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
-let mainWin;
-let currentLanguage;
-let menu;
+interface LanguageDict {
+  [key: string]: {
+    Language: string;
+    About: string;
+  };
+}
+
+let mainWin: BrowserWindow;
+let currentLanguage: string;
+let menu: Menu;
 const configStore = new Store({
   encryptionKey: '1?dnG23dd/sAnd3.d|'
 });
-const languageDict = {
+const languageDict: LanguageDict = {
   'English': {
     'Language':'Language',
     'About':'About'
@@ -31,8 +38,7 @@ const languageDict = {
   }
 }
 
-
-function languageConvert(locale) {
+function languageConvert(locale: string): string {
   if (locale.startsWith('zh')) {
       return 'Chinese'
   }else if (locale.startsWith('en')) {
@@ -44,7 +50,7 @@ function languageConvert(locale) {
   }
 }
 
-function readConfig() {
+function readConfig(): void {
   try {
     mainWin.webContents.send('key-update', configStore.get('apiKey'));
   } catch (error) {
@@ -52,7 +58,7 @@ function readConfig() {
   }
 }
 
-function saveConfig(event, key) {
+function saveConfig(event: any, key: string): void {
   try {
     configStore.set('apiKey', key);
     mainWin.webContents.send('key-update', key);
@@ -62,10 +68,10 @@ function saveConfig(event, key) {
   }
 }
 
-function buildMenu(language) {
+function buildMenu(language: string): Menu {
   const languageSet = languageDict[language];
 
-  const template = [
+  const template: MenuItemConstructorOptions[] = [
     {
       label: languageSet['Language'],
       submenu: [
@@ -78,7 +84,7 @@ function buildMenu(language) {
     {
       label: "Application",
       submenu: [
-          { role: 'about', label: languageSet['About'], selector: "orderFrontStandardAboutPanel:" },
+          { role: 'about', label: languageSet['About'] },
           { type: "separator" },
           { label: "Quit", accelerator: "Command+Q", click: function() { app.quit(); }}
       ]
@@ -86,13 +92,13 @@ function buildMenu(language) {
     {
       label: "Edit",
       submenu: [
-          { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
-          { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
+          { label: "Undo", accelerator: "CmdOrCtrl+Z", role: "undo" },
+          { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", role: "redo" },
           { type: "separator" },
-          { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
-          { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
-          { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
-          { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }  
+          { label: "Cut", accelerator: "CmdOrCtrl+X", role: "cut" },
+          { label: "Copy", accelerator: "CmdOrCtrl+C", role: "copy" },
+          { label: "Paste", accelerator: "CmdOrCtrl+V", role: "paste" },
+          { label: "Select All", accelerator: "CmdOrCtrl+A", role: "selectAll" }  
       ]
     }
   ];
@@ -100,7 +106,7 @@ function buildMenu(language) {
   return Menu.buildFromTemplate(template);
 }
 
-function switchLanguage(language) {
+function switchLanguage(language: string): Menu {
   currentLanguage = language;
   BrowserWindow.getAllWindows().forEach(win => {
     win.webContents.send('language', currentLanguage);
@@ -109,7 +115,7 @@ function switchLanguage(language) {
   return menu;
 }
 
-const createMainWindow = () => {
+const createMainWindow = (): BrowserWindow => {
   // Create the browser window.
   const mainWin = new BrowserWindow({
     width: 800,
@@ -136,7 +142,7 @@ const createMainWindow = () => {
   return mainWin;
 };
 
-function createKeyWindow () {
+function createKeyWindow (): BrowserWindow {
   const win = new BrowserWindow({
     width: 400,
     height: 73,
@@ -160,12 +166,12 @@ function createKeyWindow () {
   return win
 }
 
-async function translateSelected(timeout=500){
+async function translateSelected(timeout=500): Promise<void> {
   if (process.platform !== 'darwin'){
     // win
     const oldClipboardContent = clipboard.readText();
     await keyboard.type(Key.LeftControl,Key.C);
-    const clipboardUpdate = new Promise((resolve) =>{
+    const clipboardUpdate = new Promise<string>((resolve) =>{
       const intID = setInterval(()=>{
         const clipboardContent = clipboard.readText();
         if (clipboardContent!=oldClipboardContent){
@@ -181,7 +187,7 @@ async function translateSelected(timeout=500){
     mainWin.webContents.send('shortcut', result);
   }else{
     // darwin
-    var pressCopy = new Promise(async (resolve)=>{
+    new Promise<void>(async (resolve)=>{
       await keyboard.type(Key.LeftCmd,Key.C);
       resolve();});
     setTimeout(()=>{
@@ -204,13 +210,16 @@ app.whenReady().then(() => {
     const systemLanguage = app.getLocale();
     menu = switchLanguage(languageConvert(systemLanguage))
     Menu.setApplicationMenu(menu); 
-    ipcMain.on('menu', () => menu.popup(mainWin))
+    const winConfig:PopupOptions = {
+        window:mainWin
+    };
+    ipcMain.on('menu', () => menu.popup(winConfig))
   });
 
   ipcMain.on('key-send', saveConfig);
 
   if (process.platform !== 'darwin') {
-    globalShortcut.register('CommandOrControl+Shift+C', translateSelected());
+    globalShortcut.register('CommandOrControl+Shift+C', translateSelected);
   }else{
     globalShortcut.register('Alt+Space', translateSelected);
   }

@@ -49,7 +49,7 @@ module.exports = {
               js: './src/renderer.js',
               name: 'main_window',
               preload: {
-                js: './src/preload.js',
+                js: './src/preload.ts',
               },
             },
             {
@@ -57,7 +57,7 @@ module.exports = {
               js: './src/renderer-key.js',
               name: 'key_window',
               preload: {
-                js: './src/preload.js',
+                js: './src/preload.ts',
               },
             },
           ],
