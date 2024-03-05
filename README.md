@@ -1,3 +1,4 @@
+GPTranslator: a promptable translator based on LLM.
 ![intro gif](https://raw.githubusercontent.com/oyuntuayC/GPTranslator/main/src/intro.gif)
 
 ## 🚀 Features
@@ -9,16 +10,15 @@
 - Shortcut for quick translate selected text
 - Win/Mac app
 
-## Installation
+## Usage
 
-To install prebuilt Electron binaries, use [`npm`](https://docs.npmjs.com/).
-The preferred method is to install Electron as a development dependency in your
-app:
+To run from source code
 
 ```sh
-npm install electron --save-dev
+yarn
+yarn start
 ```
 
 ## License
 
-[MIT](https://github.com/electron/electron/blob/main/LICENSE)
+[MIT](https://github.com/GPTranslator/blob/main/LICENSE)
