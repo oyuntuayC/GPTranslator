@@ -1,6 +1,6 @@
 # GPTranslator: a promptable translator based on LLM.
 ![intro gif](https://raw.githubusercontent.com/oyuntuayC/GPTranslator/main/src/intro.gif)
-Translate any language with a prompt.
+Translate any language with a prompt using gpt or other language model.
 
 ## 🚀 Features
 
