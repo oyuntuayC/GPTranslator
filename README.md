@@ -1,14 +1,18 @@
 # GPTranslator: a promptable translator based on LLM.
 ![intro gif](https://raw.githubusercontent.com/oyuntuayC/GPTranslator/main/src/intro.gif)
+Translate any language with a prompt.
 
 ## 🚀 Features
 
-- Translate text into any langauge using GPT-3.5
+- Translate text into any langauge using LLM
 - No need to specify input langauge
 - Allow extra prompt
 - User friendly interface
 - Shortcut for quick translate selected text
 - Win/Mac app
+
+LLM support list
+- only gpt-3.5-turbo
 
 ## Usage
 
