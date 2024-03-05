@@ -161,22 +161,35 @@ function createKeyWindow () {
 }
 
 async function translateSelected(timeout=500){
-  const oldClipboardContent = clipboard.readText();
-  await keyboard.type(Key.LeftControl,Key.C);
-  const clipboardUpdate = new Promise((resolve) =>{
-    const intID = setInterval(()=>{
-      const clipboardContent = clipboard.readText();
-      if (clipboardContent!=oldClipboardContent){
-        resolve(clipboardContent);
-        clearInterval(intID);
-      }
-    },100)
-    setTimeout(()=>{resolve(oldClipboardContent)},timeout)
-  })
-  
-  const result = await clipboardUpdate;
-  mainWin.show();
-  mainWin.webContents.send('shortcut', result);
+  if (process.platform !== 'darwin'){
+    // win
+    const oldClipboardContent = clipboard.readText();
+    await keyboard.type(Key.LeftControl,Key.C);
+    const clipboardUpdate = new Promise((resolve) =>{
+      const intID = setInterval(()=>{
+        const clipboardContent = clipboard.readText();
+        if (clipboardContent!=oldClipboardContent){
+          resolve(clipboardContent);
+          clearInterval(intID);
+        }
+      },100)
+      setTimeout(()=>{resolve(oldClipboardContent)},timeout)
+    })
+
+    const result = await clipboardUpdate;
+    mainWin.show();
+    mainWin.webContents.send('shortcut', result);
+  }else{
+    // darwin
+    var pressCopy = new Promise(async (resolve)=>{
+      await keyboard.type(Key.LeftCmd,Key.C);
+      resolve();});
+    setTimeout(()=>{
+      let clipboardContent = clipboard.readText();
+      mainWin.show();
+      mainWin.webContents.send('shortcut', clipboardContent);
+    },100);
+  }
 }
 
 app.whenReady().then(() => {
@@ -197,7 +210,7 @@ app.whenReady().then(() => {
   ipcMain.on('key-send', saveConfig);
 
   if (process.platform !== 'darwin') {
-    globalShortcut.register('CommandOrControl+Shift+C', translateSelected);
+    globalShortcut.register('CommandOrControl+Shift+C', translateSelected());
   }else{
     globalShortcut.register('Alt+Space', translateSelected);
   }
