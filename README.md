@@ -21,4 +21,4 @@ yarn start
 
 ## License
 
-[MIT](https://github.com/GPTranslator/blob/main/LICENSE)
+[MIT](https://github.com/oyuntuayC/GPTranslator/blob/main/LICENSE)
