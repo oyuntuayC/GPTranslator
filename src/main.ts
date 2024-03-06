@@ -169,22 +169,34 @@ function createKeyWindow (): BrowserWindow {
 async function translateSelected(timeout=500): Promise<void> {
   if (process.platform !== 'darwin'){
     // win
-    const oldClipboardContent = clipboard.readText();
-    await keyboard.type(Key.LeftControl,Key.C);
-    const clipboardUpdate = new Promise<string>((resolve) =>{
-      const intID = setInterval(()=>{
-        const clipboardContent = clipboard.readText();
-        if (clipboardContent!=oldClipboardContent){
-          resolve(clipboardContent);
-          clearInterval(intID);
-        }
-      },100)
-      setTimeout(()=>{resolve(oldClipboardContent)},timeout)
-    })
+    // const oldClipboardContent = clipboard.readText();
+    // new Promise<void>(async (resolve)=>{
+    //   await keyboard.releaseKey(Key.LeftShift,Key.LeftControl,Key.C);
+    //   await keyboard.type(Key.LeftControl,Key.C);
+    //   resolve();});
+    // const clipboardUpdate = function ():string {
+    //   let clipboardContent:string;
+    //   const intID = setInterval(()=>{
+    //     clipboardContent = clipboard.readText();
+    //     if (clipboardContent!=oldClipboardContent){
+    //       clearInterval(intID);
+    //       return clipboardContent;
+    //     }
+    //   },100)
+    //   setTimeout(()=>{return clipboardContent;},timeout)
+    // }
+    // const result = await clipboardUpdate;
+    // mainWin.show();
+    // mainWin.webContents.send('shortcut', result);
 
-    const result = await clipboardUpdate;
-    mainWin.show();
-    mainWin.webContents.send('shortcut', result);
+    // win
+    await keyboard.releaseKey(Key.LeftShift,Key.LeftControl,Key.C);
+    await keyboard.type(Key.LeftControl,Key.C);
+    setTimeout(()=>{
+      let clipboardContent = clipboard.readText();
+      mainWin.show();
+      mainWin.webContents.send('shortcut', clipboardContent);
+    },100);
   }else{
     // darwin
     new Promise<void>(async (resolve)=>{
