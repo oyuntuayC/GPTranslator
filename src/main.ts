@@ -137,7 +137,7 @@ const createMainWindow = (): BrowserWindow => {
   mainWin.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
   // Open the DevTools.
-  // mainWin.webContents.openDevTools();
+  mainWin.webContents.openDevTools();
 
   return mainWin;
 };

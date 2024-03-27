@@ -58,6 +58,7 @@ input {
   font-family: "Roboto", Arial, sans-serif;
   font-weight: 400;
   -webkit-app-region: no-drag;
+  color: #3a3a3a;
 }
 
 input {
@@ -86,7 +87,7 @@ input:focus,
   display: inline-block;
   height: 100%;
   resize: none;
-  margin-right: 15px;
+  margin-right: 10px;
   position: relative;
 }
 

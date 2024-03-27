@@ -1,5 +1,5 @@
 import './index.css';
-import Icon from './favicon_reverse/ms-icon-144x144.png';
+import Icon from './favicon_reverse/favicon-32x32-sharpen.png';
 
 const languageDict = require('./languageDict');
 const options = document.getElementById('options');
